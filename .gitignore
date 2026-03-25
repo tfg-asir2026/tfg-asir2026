@@ -1,0 +1,17 @@
+# --- SEGURIDAD: Archivos con contraseñas ---
+# Bloquea archivos de configuración sensibles
+config.php
+conexion.php
+.env
+secrets.py
+credentials.json
+
+# --- SISTEMA: Archivos basura que no queremos ---
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+
+# --- TEMPORALES ---
+*.log
+temp/
