@@ -1,6 +1,9 @@
 # 🌐 Gestor Web para la Configuración Automatizada de Routers
 ## 🛡️ PROYECTO: PLAN 0 INCIDENCIAS (ASIR 2026)
-
+<div align="center">
+  <img src="diagrama.png" alt="Arquitectura del Proyecto" width="800px">
+  <p><b>Arquitectura de Red Mesh y Orquestación Automatizada</b></p>
+</div>
 ### 📄 Descripción del Proyecto
 Este sistema nace para eliminar el error humano en la administración de redes de Capa 3. A través de una interfaz web segura, permitimos realizar configuraciones precisas en entornos virtualizados (GNS3) sin intervención manual directa en la CLI de los routers.
 
