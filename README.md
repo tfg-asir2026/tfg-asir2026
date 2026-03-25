@@ -16,6 +16,16 @@ Este sistema nace para eliminar el error humano en la administración de redes d
 * **`/db`**: Estructura de la base de datos para la persistencia de logs y usuarios.
 * **`/docs`**: Documentación técnica, anteproyecto y manuales de topología GNS3.
 
+---
+
+### ⚠️ SEGURIDAD CRÍTICA - LEER ANTES DE SUBIR
+
+> **REGLA DE ORO:** Está terminantemente prohibido subir archivos que contengan contraseñas reales, IPs públicas o credenciales de acceso (SSH/Database).
+> 
+> * **No subir:** Archivos de configuración con claves reales.
+> * **Alternativa:** Subir un archivo de ejemplo llamado `config.php.example` con los campos vacíos para que cada uno lo rellene en su PC local.
+
+
 ### 👥 Equipo de Trabajo
 | Miembro | Rol Principal |
 | :--- | :--- |
