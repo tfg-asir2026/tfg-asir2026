@@ -1,17 +1,31 @@
-# --- SEGURIDAD: Archivos con contraseñas ---
-# Bloquea archivos de configuración sensibles
-config.php
-conexion.php
+# --- SEGURIDAD: Archivos con credenciales REALES ---
+# Nunca, bajo ningún concepto, subas estos archivos con contraseñas
 .env
+config.local.php
 secrets.py
 credentials.json
+*.pem
+*.key
 
-# --- SISTEMA: Archivos basura que no queremos ---
+# --- SISTEMA: Basura de Windows/Mac/IDE ---
 .DS_Store
 Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- PHP / DEPENDENCIAS ---
+# Si usáis Composer, la carpeta vendor NO se sube
+/vendor/
+composer.lock
+*.log
+error_log
+
+# --- TEMPORALES Y CACHÉ ---
 __pycache__/
 *.pyc
-
-# --- TEMPORALES ---
-*.log
 temp/
+tmp/
+node_modules/
