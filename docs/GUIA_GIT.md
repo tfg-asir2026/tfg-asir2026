@@ -1,74 +1,70 @@
-# Guía de Inicio: Configuración de Entorno y Git (TFG-ASIR)
+#🌐 Guía de Inicio: Configuración de Entorno y Git (TFG-ASIR)
 
----
+## 1. Instalación y Configuración de Identidad (Paso Único)
+Antes de tocar el código, Git tiene que saber quién eres. Si no haces esto, te dará error al intentar subir cambios al final.
 
-## 1. Preparación del "Motor" de Versiones
-Antes de tocar una sola línea de código, el sistema necesita el motor de Git instalado.
-1. **Descarga:** Ve a git-scm.com e instala la versión para Windows.
-2. **Instalación:** Dale a "Next" en todo. Es vital dejar las opciones por defecto para evitar conflictos de rutas.
-3. **Reinicio:** Cierra Visual Studio Code por completo y vuélvelo a abrir. Si no lo haces, VS Code estará "sordo" a la instalación de Git.
+**Descarga:** Instala Git desde git-scm.com. Dale a "Next" a todo.
 
-## 2. Clonación del Repositorio (Entorno Limpio)
-Regla de oro: No trabajes en OneDrive o Escritorio. Crea una ruta raíz para evitar errores de permisos.
-1. Abre la terminal de VS Code (`Terminal` -> `New Terminal`).
-2. Muévete a la raíz del disco: `cd C:\`
-3. Crea y entra en tu carpeta de trabajo:
-`mkdir proyectos` y luego `cd proyectos`.
-4. Clona el proyecto:
-`git clone https://github.com/tfg-asir2026/TFG-ASIR2026.git`
+**Configura tu firma**: Abre la terminal de VS Code y escribe estos dos comandos con tus datos reales:
 
-**Autenticación**: Si se abre el navegador, dale a "Authorize Git Ecosystem". Si no, asegúrate de estar logueado en tu cuenta de GitHub.
+```Bash
+git config --global user.name "Tu Nombre Real"
+git config --global user.email "tu-email@ejemplo.com"
+```
+**Reinicio:** Cierra y abre VS Code para que reconozca la instalación.
 
-## 3.  Verificación de Conexión
-Para saber si Git está "vigilando" tu carpeta, escribe:
-`git status`
+## 2. Clonación y Preparación del Entorno
+Ruta de trabajo: No uses OneDrive. En la terminal de VS Code:
 
+```Bash
+cd C:\
+mkdir proyectos
+cd proyectos
+git clone https://github.com/tfg-asir2026/TFG-ASIR2026.git
+cd TFG-ASIR2026 
+```
+**Sincronización inicial:** Asegúrate de tener lo último de la nube antes de empezar:
 
-**Error: Si dice Not a git repository, asegúrate de haber entrado en la carpeta con cd TFG-ASIR2026.**
+```Bash
+git checkout main
+git pull origin main
+```
+Si se abre el navegador, dale a "Authorize Git Ecosystem".
 
-## 4. Creación de Entorno de Trabajo Seguro (Branching)
-**Nunca trabajes directamente sobre main**. Vamos a crear tu rama personal.
-En la terminal escribe:
-`git checkout -b dev-nombre`  (Ejemplo: dev-pamela)
+## 3. Protocolo de Trabajo Diario (Ramas)
 
-Confirma que el nombre de la rama ha cambiado en la esquina inferior izquierda de VS Code.
+**REGLA DE ORO:** Nunca trabajes en main. Para cada tarea, crea una rama nueva.
 
-## 5. Configuración de Identidad (Solo la primera vez)
-Si al intentar subir cambios te sale el error "Make sure you configure your user.name", es porque Git no sabe quién eres.
+**Crear rama:** `git checkout -b nombre-de-tu-tarea` (Ej: feat-login-pamela).
 
-**Solución:** Ejecuta estos dos comandos en la terminal con tus datos reales:
-En la Terminal de VS Code (la parte de abajo). Copia y pega estos dos comandos, uno por uno, cambiando mis datos por los tuyos:
-Dile tu nombre: 
-`git config --global user.name "Tu_nombre"`
-Dile tu email (el que usas en GitHub): 
-`git config --global user.email "tu_email@ejemplo.com"`
+**Verificar:** Mira la esquina inferior izquierda de VS Code; debe poner el nombre de tu rama, NO main.
 
-## 6. Flujo de Trabajo: Guardar y Subir Cambios (Commit & Push)
-Cuando termines una tarea, sigue este orden:
-Stage: En el panel de "Source Control" (icono de los tres círculos), dale al símbolo + al lado de tus archivos.
-**Commit:** Escribe un mensaje descriptivo (ej: "Añadida configuración de seguridad") y dale al botón azul de Commit.
-Push: Dale al botón "Sync Changes" o "Publish Branch" para subirlo a la nube.
+## 4. Guardar y Subir Cambios (El Ciclo de Trabajo)
 
-## 7. Autorización y Sincronización (El último paso)
-Una vez que le des al botón de "Publish Branch", VS Code necesita conectarse oficialmente a tu cuenta de GitHub.
-Conexión al Navegador: Aparecerá una ventana de "Connect to GitHub". Dale a "Sign in with your browser".
+Cuando termines tu código, sigue este orden exacto:
 
-**Autorización:** En el navegador, pulsa el botón verde "Authorize git-ecosystem".
+**Stage:** En el panel de "Source Control" (icono de círculos), dale al + en los archivos modificados.
 
+**Commit:** Escribe un mensaje directo (ej: "Añadida tabla de logs") y dale al botón azul de Commit.
 
-Verificación de Seguridad (2FA): Si tienes activada la seguridad en GitHub, te pedirá confirmación por móvil o email. Hazlo inmediatamente para que VS Code reciba el permiso.
+**Publish/Push:** Dale al botón "Publish Branch".
 
+La primera vez te pedirá "Sign in with your browser". Dale a Autorizar y vuelve a VS Code.
 
-Aceptar en VS Code: Si el navegador te pregunta si quieres abrir Visual Studio Code, dale a "Abrir enlace".
+## 5. El Momento de la Verdad: Pull Request (Web)
 
-## 8. Automatización de Cambios (Git Fetch)
-Es probable que te salga un aviso preguntando: "Would you like Visual Studio Code to periodically run git fetch?".
-**Respuesta:** Dale a YES.
-Por qué: Esto hará que VS Code mire automáticamente si Alberto o Asier han subido algo nuevo, ahorrándote fallos de sincronización en el futuro.
+Tu código ya está en la nube, pero no en el proyecto principal.
 
-## 9. Comprobación Final de éxito
-Tu trabajo no está terminado hasta que no veas la confirmación en la web de GitHub.
-Entra en el enlace del repositorio.
-Si ves un cartel amarillo que dice: "dev-tu_nombre had recent pushes X minutes ago", ¡enhorabuena! Has subido los cambios correctamente.
-Si no ves el cartel, haz clic en el botón de ramas (que suele poner main) y selecciona tu rama (ej. dev-pamela). Si tus archivos están ahí, la nube ya los tiene.
+Entra en el repositorio en GitHub.com.
 
+**Verás un cartel amarillo:** "Compare & pull request". Dale al botón verde.
+
+Escribe qué has hecho y dale a "Create pull request".
+
+**AVISO:** Pon el enlace en el grupo de WhatsApp. No hagas el Merge tú mismo. Un compañero debe revisarlo para evitar errores.
+
+## 6. Comprobación de Éxito
+
+Entra en la web de GitHub, al cambiar de rama a la tuya, veras tus archivos
+
+Si VS Code te pregunta por el "Git Fetch" automático: DALE A YES. Así sabrás siempre si alguien ha subido algo nuevo sin tener que preguntar.
