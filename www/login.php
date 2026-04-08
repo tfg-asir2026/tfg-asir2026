@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/config.php'; // Aquí invocamos tu archivo de conexión
+require_once 'includes/config.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $_POST['usuario'] ?? '';
@@ -11,22 +11,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        // Consulta preparada para evitar Inyección SQL (aprovechando tu PDO)
-        $stmt = $pdo->prepare("SELECT password_hash FROM usuarios WHERE username = ?");
+        // CORRECCIÓN: Tabla 'usuarios_web', columna 'usuario' y verificamos que esté 'Activo'
+        $stmt = $pdo->prepare("SELECT id_usuario, password_hash, rol FROM usuarios_web WHERE usuario = ? AND estado = 'Activo'");
         $stmt->execute([$user]);
-        $usuario = $stmt->fetch();
+        $datos_usuario = $stmt->fetch();
 
-        if ($usuario && password_verify($pass, $usuario['password_hash'])) {
-            // ÉXITO: Iniciar sesión
+        if ($datos_usuario && password_verify($pass, $datos_usuario['password_hash'])) {
             session_start();
+            $_SESSION['id_usuario'] = $datos_usuario['id_usuario'];
             $_SESSION['user'] = $user;
-            header("Location: dashboard.php"); // Cambia esto a tu página de destino
+            $_SESSION['rol'] = $datos_usuario['rol'];
+            
+            header("Location: dashboard.php"); 
+            exit;
         } else {
-            // FALLO
             header("Location: index.php?error=1");
+            exit;
         }
     } catch (Exception $e) {
         error_log("Error en login: " . $e->getMessage());
-        die("Error interno del servidor.");
+        die("Error interno del servidor. Consulte con el administrador.");
     }
 }

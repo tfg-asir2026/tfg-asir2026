@@ -1,145 +1,118 @@
-/* --- Reseteo básico --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* --- Variables de Diseño NetManager v1.0 --- */
+:root {
+    --primary-blue: #004695;    /* Azul del nuevo logo */
+    --hover-blue: #00336d;
+    --dark-bg: #1c1c1c;
+    --text-main: #1a1a1b;
+    --text-muted: #606770;
+    --bg-light: #f8f9fa;
+    --error-red: #d93025;
+    --success-green: #28a745;
 }
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Una fuente más moderna */
-     background-image: url('img/fondo.jpg');
-     background-repeat: no-repeat;
-     background-size: cover;
-    min-height: 100vh;
-    margin: 0;
-    align-items: center;
-    overflow: hidden;
-}
-
-/* --- CONTENEDOR PRINCIPAL FLEXBOX (50/50) --- */
-.page-split-container {
-    display: flex;
-    width: 100%;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-light);
     height: 100vh;
+    color: var(--text-main);
 }
 
-/* --- COLUMNA IZQUIERDA: IMAGEN DEL DATA CENTER --- */
+.page-split-container { display: flex; height: 100vh; width: 100%; }
+
+/* --- Panel de Imagen (Izquierda) --- */
 .image-side {
-    flex: 1; /* Ocupa el 50% del ancho */
-    /* Reemplaza 'data-center.jpg' con tu imagen real */
-    background-image: url('data-center.jpg'); 
+    flex: 1.3;
+    /* RUTA CORREGIDA: Salimos de css/ y entramos en img/fondo.png */
+    background: linear-gradient(rgba(0, 70, 149, 0.4), rgba(28, 28, 28, 0.8)), url('../img/fondo.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    display: flex;
+    align-items: flex-end;
+    padding: 60px;
+    color: white;
 }
 
-/* --- COLUMNA DERECHA: FORMULARIO --- */
+.overlay-text h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -1px; }
+.overlay-text p { font-size: 1.3rem; opacity: 0.9; margin-top: 10px; border-left: 4px solid var(--primary-blue); padding-left: 15px; }
+
+/* --- Panel de Formulario (Derecha) --- */
 .form-side {
-    flex: 1; /* Ocupa el otro 50% del ancho */
+    flex: 0.7;
+    background: #ffffff;
     display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center;    /* Centrado vertical */
-    background-color: #ffffff; /* Fondo blanco sólido para legibilidad */
-    padding: 20px;
-}
-
-/* --- Tus estilos personales adaptados al wrapper --- */
-.form-wrapper {
-    width: 100%;
-    max-width: 400px; /* Ancho máximo de tu caja original */
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    padding: 40px;
 }
 
-/* Logo arriba del título */
-.logo-cisco {
-    width: 100px;
-    margin-bottom: 30px; /* Espacio extra debajo del logo */
-    display: block;
+.form-wrapper { width: 100%; max-width: 400px; text-align: left; }
+
+/* Estilo para el Logo de NetManager */
+.main-logo { 
+    width: 200px; /* Tamaño ajustado para logo.png */
+    height: auto;
+    margin-bottom: 30px; 
+    display: block; 
+    margin-left: 0; /* Alineado a la izquierda para un look moderno */
 }
 
-/* Título en negro (tu estilo) */
-h2 {
-    font-size: 2em;
-    color: #000000; 
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 25px; /* Espacio debajo del título */
-}
+h2 { font-size: 26px; margin-bottom: 8px; font-weight: 700; color: var(--dark-bg); }
+.subtitle { color: var(--text-muted); font-size: 15px; margin-bottom: 35px; }
 
-.input-entry {
-    margin-bottom: 15px;
+/* Inputs Estilizados */
+.input-entry { margin-bottom: 24px; }
+label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; color: var(--primary-blue); }
+
+input[type="text"], input[type="password"] {
     width: 100%;
-}
-
-/* Etiquetas en negro (tu estilo) */
-label {
-    color: #000000; 
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-/* Estilo de inputs (tu estilo con ajustes de padding) */
-input[type="text"], 
-input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    box-sizing: border-box;
+    padding: 14px;
+    border: 2px solid #e1e4e8;
+    border-radius: 8px;
     font-size: 16px;
-    color: #000000;
+    transition: all 0.2s ease;
 }
 
-/* Sección recordar (tu estilo) */
-.Recordar {
-    margin-bottom: 25px;
-    color: #000000;
-    width: 100%;
-    font-size: 0.9em;
+input:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 70, 149, 0.1);
 }
 
-/* --- TUS BOTONES NEGROS / LETRA BLANCA --- */
+/* Botón Login Azul Corporativo */
 .btn-login {
     width: 100%;
-    height: 45px;
-    border-radius: 40px;
-    background: #000000; /* Fondo negro */
-    color: #ffffff;      /* Letra blanca */
+    padding: 16px;
+    background: var(--primary-blue);
+    color: white;
     border: none;
-    outline: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
-    font-size: 1em;
-    font-weight: 600;
-    margin-bottom: 10px;
-    transition: background 0.3s;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.btn-login:hover {
-    background: #333333; /* Un gris oscuro al pasar el ratón */
+.btn-login:hover { background: var(--hover-blue); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+/* Errores y Footer */
+.error-msg {
+    margin-top: 25px;
+    padding: 15px;
+    background: #fff5f5;
+    border-left: 4px solid var(--error-red);
+    color: var(--error-red);
+    font-size: 14px;
+    border-radius: 4px;
 }
 
+.form-footer { margin-top: 50px; text-align: center; font-size: 12px; color: #999; }
 
-/* --- COMPORTAMIENTO RESPONSIVO --- */
-/* En pantallas pequeñas (celulares), se pone una columna arriba de la otra */
-@media (max-width: 768px) {
-    .page-split-container {
-        flex-direction: column;
-    }
-
-    .image-side {
-        height: 40vh; /* La imagen ocupa el 40% superior */
-        width: 100%;
-    }
-
-    .form-side {
-        width: 100%;
-        height: 60vh;
-        padding: 20px;
-    }
+/* Responsivo */
+@media (max-width: 1024px) {
+    .image-side { display: none; }
+    .form-side { flex: 1; }
 }
