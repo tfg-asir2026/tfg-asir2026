@@ -23,7 +23,7 @@ body {
 /* --- Panel de Imagen (Izquierda) --- */
 .image-side {
     flex: 1; /* Mitad de la pantalla */
-    background: linear-gradient(rgba(0, 70, 149, 0.2), rgba(28, 28, 28, 0.6)), url('../img/fondo.png');
+    background: linear-gradient(rgba(0, 70, 149, 0.2), rgba(28, 28, 28, 0.6)), url('../img/fondo.jpeg');
     background-size: cover;
     background-position: center;
 }
