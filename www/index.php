@@ -3,64 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetworkAdministrator v1.0 | Acceso Seguro</title>
+    <title>NetManager v1.0 | Acceso Técnico</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <main class="page-split-container">
-        <div class="image-side">
-            <div class="overlay-text">
-                <h1>NetworkAdministrator v1.0</h1>
-                <p>Infraestructura LAN/WAN, Servidores y Seguridad Operativa</p>
-            </div>
-        </div>
 
-        <div class="form-side">
-            <div class="form-wrapper">
-                <div class="brand-container">
-                    <img src="img/logo.png" alt="NetworkAdministrator Logo" class="main-logo">
+<div class="page-split-container">
+    <div class="image-side">
+        <div class="overlay-text">
+            </div>
+    </div>
+
+    <div class="form-side">
+        <div class="form-wrapper">
+            <img src="img/logo.png" alt="NetManager" class="main-logo">
+            
+            <h2>Acceso Técnico</h2>
+            <p class="subtitle">Ingrese sus credenciales para gestionar la red.</p>
+
+            <form action="procesar_login.php" method="POST">
+                <div class="input-entry">
+                    <label for="usuario">ID de Operador</label>
+                    <input type="text" name="usuario" id="usuario" placeholder="Usuario técnico" required>
                 </div>
-                
-                <form action="login.php" method="POST">
-                    <h2>Panel de Control</h2>
-                    <p class="subtitle">Identifíquese para gestionar la infraestructura crítica.</p>
 
-                    <div class="input-entry">        
-                        <label for="usuario"><i class="fa-solid fa-user-shield"></i> ID de Operador</label>
-                        <input type="text" name="usuario" id="usuario" placeholder="Usuario técnico" required>
-                    </div>
+                <div class="input-entry">
+                    <label for="password">Clave de Acceso</label>
+                    <input type="password" name="password" id="password" placeholder="********" required>
+                </div>
 
-                    <div class="input-entry"> 
-                        <label for="password"><i class="fa-solid fa-key"></i> Clave de Acceso</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••" required>
-                    </div>
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+            </form>
 
-                    <div class="Recordar">
-                        <label class="checkbox-container">
-                            <input type="checkbox" name="remember_user"> 
-                            <span class="checkmark"></span> Mantener sesión activa
-                        </label>
-                    </div>
+            <?php if(isset($_GET['error'])): ?>
+                <div class="error-msg">
+                    <strong>Acceso denegado:</strong> Credenciales no válidas o cuenta inactiva.
+                </div>
+            <?php endif; ?>
 
-                    <button type="submit" class="btn-login">INICIAR SESIÓN TÉCNICA</button>
-                </form>
-
-                <?php if(isset($_GET['error'])): ?>
-                    <div class="error-msg">
-                        <i class="fa-solid fa-triangle-exclamation"></i> 
-                        <strong>Error de Acceso:</strong> Credenciales no válidas en el directorio de red.
-                    </div>
-                <?php endif; ?>
-                
-                <footer class="form-footer">
-                    <p>&copy; 2026 <strong>NetworkAdministrator v1.0</strong></p>
-                    <p style="font-size: 10px; margin-top: 5px; opacity: 0.8;">
-                        <i class="fa-solid fa-shield-halved"></i> Seguridad bajo estándar ISO 27001 - Acceso Auditado
-                    </p>
-                </footer>
+            <div class="form-footer">
+                &copy; 2026 NetManager v1.0 - Seguridad Operativa
             </div>
         </div>
-    </main>
+    </div>
+</div>
+
 </body>
 </html>
