@@ -1,57 +1,53 @@
 <?php
+// login.php - Versión Blindada
 session_start();
 require_once 'includes/config.php';
 
-// Si ya está logueado, mandarlo directamente a la consola
-if (isset($_SESSION['id_usuario'])) {
-    header("Location: consola.php");
-    exit;
-}
-
-$error = "";
+// Seguridad: Forzar cabeceras de protección
+header("X-Frame-Options: DENY");
+header("X-Content-Type-Options: nosniff");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user_input = $_POST['usuario'] ?? '';
+    // Saneamiento básico de entrada
+    $user_input = trim($_POST['usuario'] ?? '');
     $pass_input = $_POST['password'] ?? '';
 
     if (!empty($user_input) && !empty($pass_input)) {
         try {
-            // 1. Buscamos al usuario en la BBDD de Alberto
             $stmt = $pdo->prepare("SELECT id_usuario, usuario, password_hash, rol, estado FROM usuarios_web WHERE usuario = ? LIMIT 1");
             $stmt->execute([$user_input]);
             $user = $stmt->fetch();
 
-            // 2. Verificación de seguridad
-            if ($user) {
-                // Comprobamos si el usuario está activo (Gestión de Identidades)
+            if ($user && password_verify($pass_input, $user['password_hash'])) {
                 if ($user['estado'] !== 'Activo') {
-                    $error = "Su cuenta está " . $user['estado'] . ". Contacte con el administrador.";
-                } 
-                // VERIFICACIÓN DEL HASH (Aquí ocurre la magia de seguridad)
-                elseif (password_verify($pass_input, $user['password_hash'])) {
-                    
-                    // 3. Login exitoso: Creamos la sesión
-                    $_SESSION['id_usuario'] = $user['id_usuario'];
-                    $_SESSION['usuario']    = $user['usuario'];
-                    $_SESSION['rol']        = $user['rol'];
-
-                    // Opcional: Registrar el acceso exitoso en los logs
-                    $stmtLog = $pdo->prepare("INSERT INTO registro_logs (id_usuario, usuario_nombre_snapshot, evento, resultado, detalles_tecnicos, ip_origen_acceso) VALUES (?, ?, 'Login', 'Exitoso', 'Acceso al panel de control', ?)");
-                    $stmtLog->execute([$user['id_usuario'], $user['usuario'], $_SERVER['REMOTE_ADDR']]);
-
-                    header("Location: consola.php");
+                    header("Location: index.php?error=cuenta_inactiva");
                     exit;
-                } else {
-                    $error = "Contraseña incorrecta.";
                 }
+
+                // PROTECCIÓN CRÍTICA: Regenerar ID para evitar fijación de sesiones
+                session_regenerate_id(true);
+                
+                $_SESSION['id_usuario'] = $user['id_usuario'];
+                $_SESSION['usuario']    = $user['usuario'];
+                $_SESSION['rol']        = $user['rol'];
+                $_SESSION['last_activity'] = time(); // Para control de timeouts
+
+                // Auditoría: Registrar IP y evento
+                $stmtLog = $pdo->prepare("INSERT INTO registro_logs (id_usuario, evento, resultado, ip_origen_acceso) VALUES (?, 'LOGIN', 'EXITOSO', ?)");
+                $stmtLog->execute([$user['id_usuario'], $_SERVER['REMOTE_ADDR']]);
+
+                header("Location: consola.php");
+                exit;
             } else {
-                $error = "El usuario no existe.";
+                // Registrar intento fallido para detectar fuerza bruta
+                error_log("Intento de login fallido para usuario: " . $user_input);
+                header("Location: index.php?error=1");
+                exit;
             }
         } catch (PDOException $e) {
-            $error = "Error de conexión con el servidor de autenticación.";
+            error_log("Error de BD: " . $e->getMessage());
+            die("Error interno de seguridad.");
         }
-    } else {
-        $error = "Por favor, rellene todos los campos.";
     }
 }
 ?>
